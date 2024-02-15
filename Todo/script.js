@@ -22,6 +22,9 @@ addBtn.addEventListener("click", (e) => {
     note.appendChild(delBtn);
     
     todoList.appendChild(note);
+
+    document.querySelector("#nameInput").value = "";
+    document.querySelector("#contentInput").value = "";
 });
 
 
