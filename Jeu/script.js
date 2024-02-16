@@ -3,17 +3,18 @@ let remainingAttempts;
 
 
 function toggleGame() {
-    const button = document.getElementById("startButton");
+    const button = document.getElementById("gameButton");
     if (button.textContent === "Start Game") {
-        button.textContent = "Leave Game";
         startGame();
     } else {
-        button.textContent = "Start Game";
         endGame();
     }
 }
 
 function startGame() {
+    const button = document.getElementById("gameButton");
+    button.textContent = "Leave Game";
+    /* asking the user to choose difficulty */
     const difficulty = prompt("Choose difficilty :\n1: Easy\n2: Medium\n3: Hard").toLowerCase();
     let max;
     switch (difficulty) {
@@ -34,6 +35,7 @@ function startGame() {
             toggleGame();
             return;
     }
+    /* choosing a secret number */
     secretNumber = Math.floor(Math.random() * max) + 1;
     console.log("Secret number:", secretNumber);
     alert("You have " + remainingAttempts + ' attempts\n ' +
@@ -46,6 +48,8 @@ function startGame() {
 function endGame() {
     document.querySelector("#gameInput").classList.add('hidden');
     document.querySelector("#guessInput").value = "";
+    const button = document.getElementById("gameButton");
+    button.textContent = "Start Game";
 }
 
 function checkGuess() {
@@ -56,8 +60,8 @@ function checkGuess() {
     }
     remainingAttempts--;
     if (guess === secretNumber) {
-        alert("Congrats! You guessed the corect number.");
-        toggleGame();
+        alert("Congrats! You guessed the correct number.");
+        endGame();
     } else if (guess < secretNumber) {
         alert("The secret number is higher. Remaining attempts: " + remainingAttempts);
     } else {
@@ -65,7 +69,7 @@ function checkGuess() {
     }
     if (remainingAttempts === 0) {
         alert("Out of attempts! The secret number was " + secretNumber);
-        toggleGame();
+        endGame();
     }
     document.querySelector("#guessInput").value = "";
     document.querySelector("#guessInput").focus();
